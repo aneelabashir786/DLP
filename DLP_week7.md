@@ -1,3 +1,4 @@
+
 # Flattening
 
 ANN only works with **1D input vectors** — simple lists of numbers.
@@ -300,11 +301,8 @@ ReLU + Tanh (in hidden layers )
 sigmoid + softmax (on output layer )
 
 
-# Dense Layers : 
 
-Flate layers with weights ( w ) that update in backpropagation . 
-
-# Pooling 
+# Pooling Layer 
 
 1. What is a Pooling Layer?
 
@@ -335,3 +333,20 @@ Pooling uses a window (filter) that slides across the feature map — similar to
 | **Average Pooling** | Takes the **average of all values** in the window | `[2, 4; 6, 8] → avg = 5` | Produces smoother, more generalized outputs | Used in older CNNs (like LeNet) |
 | **Global Average Pooling (GAP)** | Takes the **average of entire feature map** (1 value per channel) | `8×8×128 → 1×1×128` | Reduces parameters, prevents overfitting | Common in modern CNNs (ResNet, MobileNet) |
 | **Global Max Pooling (GMP)** | Takes the **maximum of entire feature map** (1 value per channel) | `8×8×128 → 1×1×128` | Captures the strongest global activation | Sometimes used with GAP or Dense layers |
+
+
+
+### There are no learnable parameters 
+
+### Output size : 
+
+           output = C x H' x W' 
+
+           H' = (H - K)/S + 1 
+           w' = (w - k)/S + 1 
+
+           
+
+# Dense Layers : 
+
+Flate layers with weights ( w ) that update in backpropagation . 
