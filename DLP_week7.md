@@ -237,3 +237,117 @@ The number of parameters (indirectly, if fully connected layers follow large out
 The GPU/CPU memory usage during forward and backward propagation.
 
 So yes — while padding keeps the feature map size constant, it also increases the total memory and computation load.
+
+
+<h1>Stride</h1>
+
+1. What Is Stride?
+
+Stride (S) means how many pixels the filter (kernel) moves at each step when sliding across the image.
+
+Stride = 1 → the filter moves 1 pixel at a time (dense scanning)
+
+Stride = 2 → the filter jumps 2 pixels at a time (skips some pixels)
+
+So stride controls how much overlap happens between filter positions.
+
+2. Formula (with Stride)
+
+You already know the formula:
+
+      𝑂  =  (𝑊 − 𝐹 + 2𝑃)/𝑆 + 1
+​
+
+From this, you can see:
+
+If S increases → denominator increases → Output size decreases . That means larger stride → smaller feature map
+
+
+1. Formula for Learnable Parameters in a Convolution Layer
+
+Each convolutional layer has filters (kernels) that learn weights.
+The total number of learnable parameters includes:
+
+The weights inside each filter
+
+The bias term (optional, but usually included)
+
+So, the formula is:
+
+Parameters
+=
+(
+𝐾
+ℎ
+×
+𝐾
+𝑤
+×
+𝐶
+𝑖
+𝑛
++
+1
+)
+×
+𝐶
+𝑜
+𝑢
+𝑡
+Parameters=(K
+h
+	​
+
+×K
+w
+	​
+
+×C
+in
+	​
+
++1)×C
+out
+	​
+
+
+Where:
+
+𝐾
+ℎ
+K
+h
+	​
+
+ = filter (kernel) height
+
+𝐾
+𝑤
+K
+w
+	​
+
+ = filter width
+
+𝐶
+𝑖
+𝑛
+C
+in
+	​
+
+ = number of input channels
+
+𝐶
+𝑜
+𝑢
+𝑡
+C
+out
+	​
+
+ = number of output channels (number of filters)
+
++
+1
++1 = bias term for each filter
