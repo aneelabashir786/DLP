@@ -151,7 +151,8 @@ Complex shapes (in deeper layers)
 🔹 How It Works Mathematically
 
 ( with 1 stride )
-output size = N - k + 1 
+           
+           output size = N - k + 1 
 
 N = size of input image 
 K = size of filter 
@@ -198,3 +199,41 @@ Now applying a 3×3 filter gives:
 7  −  3 +  1  =  5
 
 Output size = same as input (5×5)
+
+Mathematically : 
+
+         output size = N−K+2P​+1
+
+
+<h3>1. Effect on Time Complexity</h3>
+
+Because the input image size is now larger:
+
+The convolution operation has to do more multiplications and additions.
+
+That increases the computation time per layer.
+
+And since CNNs have many layers, total training time increases.
+
+In short:
+
+Time Complexity
+∝
+Input Size
+×
+Number of Filters
+Time Complexity∝Input Size×Number of Filters
+
+So if the input stays large due to padding, every filter does more work.
+
+ <h3>2. Effect on Space (Memory) Complexity</h3>
+
+Padding also increases:
+
+The memory needed to store intermediate feature maps.
+
+The number of parameters (indirectly, if fully connected layers follow large outputs).
+
+The GPU/CPU memory usage during forward and backward propagation.
+
+So yes — while padding keeps the feature map size constant, it also increases the total memory and computation load.
