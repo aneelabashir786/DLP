@@ -296,4 +296,42 @@ Where:
 # Non-linearity : 
 
 ReLU + Tanh (in hidden layers ) 
+
 sigmoid + softmax (on output layer )
+
+
+# Dense Layers : 
+
+Flate layers with weights ( w ) that update in backpropagation . 
+
+# Pooling 
+
+1. What is a Pooling Layer?
+
+A pooling layer reduces the spatial size (width and height) of feature maps while keeping the important information.
+It helps make the network smaller, faster, and more robust to small changes or noise in the input image.
+
+Pooling acts like a “summary” operation for local regions of the feature map.
+
+2. Why We Use Pooling
+
+To reduce computation (fewer parameters for next layers)
+
+To control overfitting
+
+To make the model translation invariant (small movements in image don’t change output much)
+
+3. How Pooling Works
+
+Pooling uses a window (filter) that slides across the feature map — similar to convolution — but instead of performing multiplication, it performs a simple operation like max or average.
+
+
+### types of pooling
+
+| **Type of Pooling** | **Operation** | **Output Calculation Example (2×2 Window)** | **Purpose / Effect** | **Common Usage** |
+|----------------------|----------------|----------------------------------------------|-----------------------|------------------|
+| **Max Pooling** | Takes the **maximum value** from each window | `[1, 3; 2, 0] → max = 3` | Keeps the most dominant feature (strong edges/textures) | Most common in CNNs |
+| **Min Pooling** | Takes the **minimum value** from each window | `[4, 5; 1, 3] → min = 1` | Highlights weak or dark features; reduces noise | Rarely used (special tasks) |
+| **Average Pooling** | Takes the **average of all values** in the window | `[2, 4; 6, 8] → avg = 5` | Produces smoother, more generalized outputs | Used in older CNNs (like LeNet) |
+| **Global Average Pooling (GAP)** | Takes the **average of entire feature map** (1 value per channel) | `8×8×128 → 1×1×128` | Reduces parameters, prevents overfitting | Common in modern CNNs (ResNet, MobileNet) |
+| **Global Max Pooling (GMP)** | Takes the **maximum of entire feature map** (1 value per channel) | `8×8×128 → 1×1×128` | Captures the strongest global activation | Sometimes used with GAP or Dense layers |
