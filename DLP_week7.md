@@ -70,3 +70,132 @@ Example pixel:
 [0, 255, 0] → pure green  
 [0, 0, 255] → pure blue  
 
+
+<h1>Convolution Layer</h1>
+
+1. What is Feature Extraction?
+
+Feature extraction means identifying important information from an image — such as edges, corners, shapes, and textures — that helps a model understand what the image contains.
+
+Before CNNs were introduced, humans used handcrafted feature extraction methods, such as:
+
+HOG (Histogram of Oriented Gradients)
+
+LBP (Local Binary Patterns)
+
+Gabor Filters, SIFT, or SURF
+
+These were manually designed to capture specific image characteristics.
+
+2. Traditional Feature Extraction Methods
+
+    HOG (Histogram of Oriented Gradients)
+
+Used to detect edges and shapes in an image.
+
+Works by dividing the image into small regions (“cells”) and computing the gradient directions (how brightness changes).
+
+Creates a histogram of edge orientations.
+
+   Output: A feature vector that describes edge directions — often used in tasks like human detection or object recognition.
+
+   LBP (Local Binary Pattern)
+
+Used to capture texture patterns.
+
+Compares each pixel with its neighboring pixels:
+
+If a neighbor’s value ≥ center pixel → write “1”
+
+Otherwise → write “0”
+
+The result is a binary pattern (like 11010010) converted into a decimal value.
+
+A histogram of these values gives a texture description.
+
+ Output: A representation of texture, useful for face recognition or surface analysis.
+
+   Gabor Filters and Similar Methods
+
+Capture both frequency and orientation information.
+
+Can detect textures and edges at various angles.
+
+🤖 3. CNNs (Convolutional Neural Networks)
+
+When CNNs were developed, they replaced these manual methods.
+Now, CNNs automatically learn what kind of features to extract — no need for HOG, LBP, or Gabor filters manually.
+
+⚙️ 4. What is a Convolution Layer?
+
+A convolution layer is the main building block of a CNN.
+
+It uses small filters (kernels), such as 3×3 or 5×5 matrices.
+
+These filters slide over the image, performing a convolution operation.
+
+The result is a feature map, which highlights specific patterns.
+
+Each filter automatically learns to detect:
+
+Edges
+
+Corners
+
+Textures
+
+Object parts
+
+Complex shapes (in deeper layers)
+
+🔹 How It Works Mathematically
+
+( with 1 stride )
+output size = N - k + 1 
+
+N = size of input image 
+K = size of filter 
+
+for Non squared image : 
+
+32 x 30 
+
+(32 - 5 + 1 ) x (30 - 5 + 1) = 28 x 26 x 1(no of filters ) 
+
+
+
+When a filter (kernel) slides over an image during convolution, it cannot cover the boundary pixels completely — so the output size shrinks.
+
+Let’s take an example:
+
+Suppose input image size = 5×5
+
+Filter (kernel) size = 3×3
+
+Stride = 1
+
+Then the output feature map size is calculated by the formula:
+
+Output size
+=
+Input size
+−
+Filter size
++
+1
+Output size=Input size−Filter size+1
+=
+5
+−
+3
++
+1
+=
+3
+=5−3+1=3
+
+So output = 3×3
+
+That means — the larger the filter, the smaller the output feature map.
+
+
