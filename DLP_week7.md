@@ -133,14 +133,13 @@ Each filter automatically learns to detect:
 
 ### Mathematical Formula (Stride = 1)
 
-[
-\text{Output Size} = N - K + 1
-]
 
-Where:
+            {Output Size} = N - K + 1
+           
+           Where:
 
-* ( N ) = Input size
-* ( K ) = Filter (kernel) size
+          ( N ) = Input size
+          ( K ) = Filter (kernel) size
 
 **Example (non-square image):**
 Input = 32×30, Filter = 5×5
@@ -160,9 +159,11 @@ Input = 5×5
 Filter = 3×3
 Stride = 1
 
-[
-\text{Output Size} = \text{Input Size} - \text{Filter Size} + 1 = 5 - 3 + 1 = 3
-]
+
+          {Output Size} = {Input Size} - {Filter Size} + 1 
+                       
+                        = 5 - 3 + 1 = 3
+
 
 So output = 3×3.
 
@@ -183,9 +184,9 @@ Output size = same as input (5×5)
 
 **General Formula:**
 
-[
-\text{Output Size} = N - K + 2P + 1
-]
+             
+             {Output Size} = N - K + 2P + 1
+
 
 ---
 
@@ -230,9 +231,9 @@ Stride controls how much overlap occurs between filter positions.
 
 ## 2. Formula (with Stride)
 
-[
-O = \frac{(W - F + 2P)}{S} + 1
-]
+        [
+           O = \frac{(W - F + 2P)}{S} + 1
+        ]
 
 From this formula:
 
