@@ -291,3 +291,9 @@ Where:
 
 * Each MAC = 1 multiplication + 1 addition
 * Some references express complexity in FLOPs (Floating Point Operations), approximately **2 × MACs**
+
+
+# Non-linearity : 
+
+ReLU + Tanh (in hidden layers ) 
+sigmoid + softmax (on output layer )
