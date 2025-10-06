@@ -1,319 +1,293 @@
-<h1>Flattening</h1>
+# Flattening
 
+ANN only works with **1D input vectors** — simple lists of numbers.
+But images are **2D or 3D arrays** (width × height × color channels).
 
-ANN only works with 1D input vectors — simple lists of numbers.
+Before feeding an image into a normal ANN, we must **flatten** it.
 
-But images are 2D or 3D arrays (width × height × color channels).
-
-So, before feeding an image into a normal ANN, we must flatten it.
-
-Example:
+**Example:**
 If an image is 28×28 pixels (like MNIST digits), it has
-28 × 28 = 784 features.
-We convert the image into a 784×1 vector using a Flatten layer.
+28 × 28 = **784 features**.
+We convert the image into a **784×1 vector** using a Flatten layer.
 
- Flatten layer → turns multi-dimensional input (e.g. 28×28) into 1D vector (784) but a lot of spetial information is lost and the relative relation is lost . 
+The Flatten layer turns multi-dimensional input (e.g., 28×28) into a 1D vector (784).
+However, a lot of **spatial information is lost**, and the **relative relationship between pixels** disappears.
 
-<h1>CNN</h1>
+---
 
--> Downsample the original input but maintain the spetial information
+# CNN (Convolutional Neural Networks)
 
+CNNs were designed **especially for images** to preserve **spatial structure** — relationships between neighboring pixels.
+They were first used in 1980 and officially named in **1989 by Yann LeCun**.
 
-Then CNN (Convolutional Neural Network) came (1stly used in 1980 but named in 1989 by Ly Chy)
+### Key Idea
 
-CNNs were designed especially for images, to preserve spatial structure (relationships between neighboring pixels).
+CNNs downsample the original input but maintain spatial information.
 
 CNNs don’t flatten the image at the beginning.
-
 Instead, they use:
 
-Convolution layers → detect features (edges, textures)
+* **Convolution layers** → detect features (edges, textures)
+* **Pooling layers** → reduce size but keep spatial info
+* **Flattening** → done after convolution and pooling, before fully connected (Dense) layers
 
-Pooling layers → reduce size but keep spatial info
+---
 
-Then finally, before the fully connected (Dense) layer at the end, they Flatten the feature maps.
+## 1. Grayscale Images
 
+* Have **one color channel** (intensity of light).
+* Each pixel stores a single value (brightness) between 0 and 255.
+* Example shape: **(28, 28, 1)**
 
-<h3>1. Grayscale Images</h3>
+| Pixel Value | Meaning |
+| ----------- | ------- |
+| 0           | Black   |
+| 255         | White   |
 
-These have only one color channel (intensity of light).
+---
 
-Each pixel stores a single value (brightness) between 0 and 255.
+## 2. Colored Images (RGB)
 
-Example:
+* Use **3 channels**: Red, Green, Blue (RGB).
+* Each pixel = 3 numbers (one per channel).
+* Example shape: **(64, 64, 3)**
 
-A 28×28 grayscale image → shape = (28, 28, 1)
+| RGB Value   | Color |
+| ----------- | ----- |
+| [255, 0, 0] | Red   |
+| [0, 255, 0] | Green |
+| [0, 0, 255] | Blue  |
 
-(the last 1 is the number of channels)
+---
 
- Example pixel:
+# Convolution Layer
 
-Pixel value = 0 → black  
-Pixel value = 255 → white  
-
-
-<h3> 2. Colored Images </h3>
-
-These use 3 channels: Red, Green, Blue (RGB).
-
-Each pixel is made of 3 numbers — one for each color component.
-
-Example:
-
-A 64×64 color image → shape = (64, 64, 3)
-
-(the last 3 shows RGB channels)
-
-Example pixel:
-
-[255, 0, 0] → pure red  
-[0, 255, 0] → pure green  
-[0, 0, 255] → pure blue  
-
-
-<h1>Convolution Layer</h1>
-
-1. What is Feature Extraction?
+## 1. What Is Feature Extraction?
 
 Feature extraction means identifying important information from an image — such as edges, corners, shapes, and textures — that helps a model understand what the image contains.
 
-Before CNNs were introduced, humans used handcrafted feature extraction methods, such as:
+### Traditional Feature Extraction Methods (Before CNNs)
 
-HOG (Histogram of Oriented Gradients)
+Humans used handcrafted feature extraction methods such as:
 
-LBP (Local Binary Patterns)
-
-Gabor Filters, SIFT, or SURF
+* **HOG (Histogram of Oriented Gradients)**
+* **LBP (Local Binary Patterns)**
+* **Gabor Filters, SIFT, SURF**
 
 These were manually designed to capture specific image characteristics.
 
-2. Traditional Feature Extraction Methods
+---
 
-    HOG (Histogram of Oriented Gradients)
+### HOG (Histogram of Oriented Gradients)
 
-Used to detect edges and shapes in an image.
+* Detects edges and shapes in an image.
+* Divides the image into small cells and computes gradient directions (how brightness changes).
+* Builds a histogram of edge orientations.
 
-Works by dividing the image into small regions (“cells”) and computing the gradient directions (how brightness changes).
+**Output:** A feature vector describing edge directions, often used in human or object detection.
 
-Creates a histogram of edge orientations.
+---
 
-   Output: A feature vector that describes edge directions — often used in tasks like human detection or object recognition.
+### LBP (Local Binary Pattern)
 
-   LBP (Local Binary Pattern)
+* Captures texture patterns.
+* Compares each pixel with its neighbors:
 
-Used to capture texture patterns.
+  * If neighbor ≥ center → 1
+  * Else → 0
+* Generates binary patterns (e.g., 11010010), converts to decimals, and creates a histogram.
 
-Compares each pixel with its neighboring pixels:
+**Output:** A representation of texture, useful for face recognition or surface analysis.
 
-If a neighbor’s value ≥ center pixel → write “1”
+---
 
-Otherwise → write “0”
+### Gabor Filters and Similar Methods
 
-The result is a binary pattern (like 11010010) converted into a decimal value.
+* Capture frequency and orientation information.
+* Detect textures and edges at various angles.
 
-A histogram of these values gives a texture description.
+---
 
- Output: A representation of texture, useful for face recognition or surface analysis.
+## 2. CNN Feature Extraction
 
-   Gabor Filters and Similar Methods
+CNNs automatically learn what kind of features to extract — no need for manual HOG, LBP, or Gabor filters.
+Each convolutional layer learns its own filters to detect edges, corners, and complex shapes.
 
-Capture both frequency and orientation information.
+---
 
-Can detect textures and edges at various angles.
-
-🤖 3. CNNs (Convolutional Neural Networks)
-
-When CNNs were developed, they replaced these manual methods.
-Now, CNNs automatically learn what kind of features to extract — no need for HOG, LBP, or Gabor filters manually.
-
-⚙️ 4. What is a Convolution Layer?
+## 3. What Is a Convolution Layer?
 
 A convolution layer is the main building block of a CNN.
-
-It uses small filters (kernels), such as 3×3 or 5×5 matrices.
-
-These filters slide over the image, performing a convolution operation.
-
-The result is a feature map, which highlights specific patterns.
+It uses small filters (e.g., 3×3 or 5×5) that slide over the image to create feature maps.
 
 Each filter automatically learns to detect:
 
-Edges
+* Edges
+* Corners
+* Textures
+* Object parts
+* Complex shapes (in deeper layers)
 
-Corners
+---
 
-Textures
+### Mathematical Formula (Stride = 1)
 
-Object parts
+[
+\text{Output Size} = N - K + 1
+]
 
-Complex shapes (in deeper layers)
+Where:
 
-🔹 How It Works Mathematically
+* ( N ) = Input size
+* ( K ) = Filter (kernel) size
 
-( with 1 stride )
-           
-           output size = N - k + 1 
+**Example (non-square image):**
+Input = 32×30, Filter = 5×5
+[
+(32 - 5 + 1) × (30 - 5 + 1) = 28 × 26 × 1
+]
 
-N = size of input image 
-K = size of filter 
+---
 
-for Non squared image : 
+# Padding
 
-32 x 30 
+When a filter slides over an image, boundary pixels are not fully covered — so the output shrinks.
 
-(32 - 5 + 1 ) x (30 - 5 + 1) = 28 x 26 x 1(no of filters ) 
+### Example
 
-
-<h1>Padding</h1>
-
-When a filter (kernel) slides over an image during convolution, it cannot cover the boundary pixels completely — so the output size shrinks.
-
-Let’s take an example:
-
-Suppose input image size = 5×5
-
-Filter (kernel) size = 3×3
-
+Input = 5×5
+Filter = 3×3
 Stride = 1
 
-Then the output feature map size is calculated by the formula:
+[
+\text{Output Size} = \text{Input Size} - \text{Filter Size} + 1 = 5 - 3 + 1 = 3
+]
 
-Output size  = Input size − Filter size + 1
+So output = 3×3.
 
-   =  5    −   3  +   1  =  3
-   
- So output = 3×3
+The larger the filter, the smaller the output feature map.
 
-**That means — the larger the filter, the smaller the output feature map.**
+To prevent loss of image size, CNNs use **padding**.
+Padding means adding extra rows/columns (usually zeros) around the image before applying the filter.
 
-
-To prevent loss of image size, CNNs use padding.
-
-Padding means adding extra rows/columns (usually zeros) around the border of the input image before applying the filter.
-
-Example:
-
-If you add 1 pixel of zero-padding around a 5×5 image → it becomes 7×7.
+**Example:**
+If you add 1-pixel zero-padding around a 5×5 image, it becomes 7×7.
 Now applying a 3×3 filter gives:
 
-7  −  3 +  1  =  5
+[
+7 - 3 + 1 = 5
+]
 
 Output size = same as input (5×5)
 
-Mathematically : 
+**General Formula:**
 
-         output size = N−K+2P​+1
+[
+\text{Output Size} = N - K + 2P + 1
+]
 
+---
 
-<h3>1. Effect on Time Complexity</h3>
+## 1. Effect on Time Complexity
 
-Because the input image size is now larger:
+Because the input image size becomes larger, the convolution operation does more multiplications and additions.
+This increases computation time per layer.
+Since CNNs have many layers, total training time increases.
 
-The convolution operation has to do more multiplications and additions.
+[
+\text{Time Complexity} \propto \text{Input Size} \times \text{Number of Filters}
+]
 
-That increases the computation time per layer.
+If the input stays large due to padding, every filter performs more work.
 
-And since CNNs have many layers, total training time increases.
+---
 
-In short:
+## 2. Effect on Space (Memory) Complexity
 
-Time Complexity
-∝
-Input Size
-×
-Number of Filters
-Time Complexity∝Input Size×Number of Filters
+Padding increases:
 
-So if the input stays large due to padding, every filter does more work.
+* Memory required for feature maps
+* Intermediate storage
+* GPU/CPU memory usage during forward and backward propagation
 
- <h3>2. Effect on Space (Memory) Complexity</h3>
+Thus, while padding keeps the output size constant, it increases memory and computational load.
 
-Padding also increases:
+---
 
-The memory needed to store intermediate feature maps.
+# Stride
 
-The number of parameters (indirectly, if fully connected layers follow large outputs).
+## 1. What Is Stride?
 
-The GPU/CPU memory usage during forward and backward propagation.
+Stride (S) means how many pixels the filter moves at each step when sliding across the image.
 
-So yes — while padding keeps the feature map size constant, it also increases the total memory and computation load.
+* Stride = 1 → filter moves 1 pixel at a time
+* Stride = 2 → filter jumps 2 pixels at a time
 
+Stride controls how much overlap occurs between filter positions.
 
-<h1>Stride</h1>
+---
 
-1. What Is Stride?
+## 2. Formula (with Stride)
 
-Stride (S) means how many pixels the filter (kernel) moves at each step when sliding across the image.
+[
+O = \frac{(W - F + 2P)}{S} + 1
+]
 
-Stride = 1 → the filter moves 1 pixel at a time (dense scanning)
+From this formula:
 
-Stride = 2 → the filter jumps 2 pixels at a time (skips some pixels)
+If **S increases**, the denominator increases, causing output size to decrease.
+Larger stride → smaller feature map.
 
-So stride controls how much overlap happens between filter positions.
+---
 
-2. Formula (with Stride)
-
-You already know the formula:
-
-      𝑂  =  (𝑊 − 𝐹 + 2𝑃)/𝑆 + 1
-​
-
-From this, you can see:
-
-If S increases → denominator increases → Output size decreases . That means larger stride → smaller feature map
-
-
-1. Formula for Learnable Parameters in a Convolution Layer
+# Learnable Parameters in a Convolution Layer
 
 Each convolutional layer has filters (kernels) that learn weights.
-The total number of learnable parameters includes:
+The total number of learnable parameters includes both weights and bias terms.
 
-The weights inside each filter
+[
+\text{Parameters} = (K_h \times K_w \times C_{in} + 1) \times C_{out}
+]
 
-The bias term (optional, but usually included)
+Where:
 
-So, the formula is:
+* ( K_h ) = filter height
+* ( K_w ) = filter width
+* ( C_{in} ) = number of input channels
+* ( C_{out} ) = number of output channels (number of filters)
+* ( +1 ) = bias for each filter
 
+---
 
-    Parameters =  ( 𝐾ℎ  ×  𝐾𝑤  ×  𝐶𝑖𝑛  +  1) ×  𝐶𝑜𝑢𝑡
+# Multiply-Add (MAC) Operations
 
-	​Where:
+When a convolution filter slides over the image, at each position it:
 
-        𝐾ℎ = filter (kernel) height
+* Multiplies every filter weight with the corresponding input pixel
+* Adds all results to produce one output value
 
-        𝐾𝑤 = filter width
+This is called a **Multiply–Accumulate (MAC)** operation.
 
-        𝐶i𝑛 = number of input channels
+---
 
-       𝐶𝑜𝑢𝑡 = number of output channels (number of filters)
-
-	   +1 = bias term for each filter
-
-
-
-1. What are Multiply-Add (MAC) operations?
-
-When a convolution filter slides over the image, at each location it:
-
-Multiplies every filter weight with the corresponding input pixel
-
-Then adds all these values to produce one output value.
-
-That’s called a Multiply–Accumulate (MAC) operation.
-
- 2. Formula to calculate MAC operations
+## Formula to Calculate MAC Operations
 
 For a single convolutional layer:
 
-     Total MACs  = 𝐾ℎ  ×  𝐾𝑤  ×  𝐶𝑖𝑛  × 𝐻o𝑢𝑡  × 𝑊𝑜𝑢𝑡  ×  𝐶𝑜𝑢𝑡
-​                                    
+[
+\text{Total MACs} = K_h \times K_w \times C_{in} \times H_{out} \times W_{out} \times C_{out}
+]
 
-     where 
-	 
-	 𝐾ℎ , 𝐾𝑤  = filter height and width
+Where:
 
-     𝐶𝑖𝑛  = number of input channels
+* ( K_h, K_w ) = filter height and width
+* ( C_{in} ) = number of input channels
+* ( C_{out} ) = number of filters (output channels)
+* ( H_{out}, W_{out} ) = output feature map height and width
 
-     𝐶𝑜𝑢𝑡  = number of filters (output channels)
+---
 
-     𝐻𝑜𝑢𝑡  ,  𝑊𝑜𝑢𝑡  = output feature map height and width
+**Notes:**
+
+* Each MAC = 1 multiplication + 1 addition
+* Some references express complexity in FLOPs (Floating Point Operations), approximately **2 × MACs**
