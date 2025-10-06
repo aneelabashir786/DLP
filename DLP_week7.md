@@ -246,19 +246,15 @@ Larger stride → smaller feature map.
 Each convolutional layer has filters (kernels) that learn weights.
 The total number of learnable parameters includes both weights and bias terms.
 
-[
-\text{Parameters} = (K_h \times K_w \times C_{in} + 1) \times C_{out}
-]
-
-Where:
-
-* ( K_h ) = filter height
-* ( K_w ) = filter width
-* ( C_{in} ) = number of input channels
-* ( C_{out} ) = number of output channels (number of filters)
-* ( +1 ) = bias for each filter
-
----
+      Parameters = ( 𝐾ℎ × 𝐾𝑤 × 𝐶𝑖𝑛 + 1) × 𝐶𝑜𝑢𝑡​
+      
+      Where:
+      
+       𝐾ℎ = filter (kernel) height
+       𝐾𝑤 = filter width
+       𝐶i𝑛 = number of input channels
+       𝐶𝑜𝑢𝑡 = number of output channels (number of filters)
+       +1 = bias term for each filter
 
 # Multiply-Add (MAC) Operations
 
@@ -273,21 +269,16 @@ This is called a **Multiply–Accumulate (MAC)** operation.
 
 ## Formula to Calculate MAC Operations
 
-For a single convolutional layer:
-
-[
-\text{Total MACs} = K_h \times K_w \times C_{in} \times H_{out} \times W_{out} \times C_{out}
-]
-
-Where:
-
-* ( K_h, K_w ) = filter height and width
-* ( C_{in} ) = number of input channels
-* ( C_{out} ) = number of filters (output channels)
-* ( H_{out}, W_{out} ) = output feature map height and width
-
----
-
+For a single convolutional layer: 
+            
+            Total MACs = 𝐾ℎ × 𝐾𝑤 × 𝐶𝑖𝑛 × 𝐻o𝑢𝑡 × 𝑊𝑜𝑢𝑡 × 𝐶𝑜𝑢𝑡
+            
+            ​where 
+            
+            𝐾ℎ , 𝐾𝑤 = filter height and width 
+            𝐶𝑖𝑛 = number of input channels 
+            𝐶𝑜𝑢𝑡 = number of filters (output channels) 
+            𝐻𝑜𝑢𝑡 , 𝑊𝑜𝑢𝑡 = output feature map height and width
 **Notes:**
 
 * Each MAC = 1 multiplication + 1 addition
