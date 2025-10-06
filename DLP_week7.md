@@ -288,3 +288,32 @@ So, the formula is:
        𝐶𝑜𝑢𝑡 = number of output channels (number of filters)
 
 	   +1 = bias term for each filter
+
+
+
+1. What are Multiply-Add (MAC) operations?
+
+When a convolution filter slides over the image, at each location it:
+
+Multiplies every filter weight with the corresponding input pixel
+
+Then adds all these values to produce one output value.
+
+That’s called a Multiply–Accumulate (MAC) operation.
+
+ 2. Formula to calculate MAC operations
+
+For a single convolutional layer:
+
+     Total MACs  = 𝐾ℎ  ×  𝐾𝑤  ×  𝐶𝑖𝑛  × 𝐻o𝑢𝑡  × 𝑊𝑜𝑢𝑡  ×  𝐶𝑜𝑢𝑡
+​                                    
+
+     where 
+	 
+	 𝐾ℎ , 𝐾𝑤  = filter height and width
+
+     𝐶𝑖𝑛  = number of input channels
+
+     𝐶𝑜𝑢𝑡  = number of filters (output channels)
+
+     𝐻𝑜𝑢𝑡  ,  𝑊𝑜𝑢𝑡  = output feature map height and width
