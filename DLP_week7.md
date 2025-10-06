@@ -163,6 +163,7 @@ for Non squared image :
 (32 - 5 + 1 ) x (30 - 5 + 1) = 28 x 26 x 1(no of filters ) 
 
 
+<h1>Padding</h1>
 
 When a filter (kernel) slides over an image during convolution, it cannot cover the boundary pixels completely — so the output size shrinks.
 
@@ -176,26 +177,24 @@ Stride = 1
 
 Then the output feature map size is calculated by the formula:
 
-Output size
-=
-Input size
-−
-Filter size
-+
-1
-Output size=Input size−Filter size+1
-=
-5
-−
-3
-+
-1
-=
-3
-=5−3+1=3
+Output size  = Input size − Filter size + 1
 
-So output = 3×3
+   =  5    −   3  +   1  =  3
+   
+ So output = 3×3
 
-That means — the larger the filter, the smaller the output feature map.
+**That means — the larger the filter, the smaller the output feature map.**
 
 
+To prevent loss of image size, CNNs use padding.
+
+Padding means adding extra rows/columns (usually zeros) around the border of the input image before applying the filter.
+
+Example:
+
+If you add 1 pixel of zero-padding around a 5×5 image → it becomes 7×7.
+Now applying a 3×3 filter gives:
+
+7  −  3 +  1  =  5
+
+Output size = same as input (5×5)
