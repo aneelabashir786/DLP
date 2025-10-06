@@ -274,80 +274,17 @@ The bias term (optional, but usually included)
 
 So, the formula is:
 
-Parameters
-=
-(
-𝐾
-ℎ
-×
-𝐾
-𝑤
-×
-𝐶
-𝑖
-𝑛
-+
-1
-)
-×
-𝐶
-𝑜
-𝑢
-𝑡
-Parameters=(K
-h
-	​
 
-×K
-w
-	​
+    Parameters =  ( 𝐾ℎ  ×  𝐾𝑤  ×  𝐶𝑖𝑛  +  1) ×  𝐶𝑜𝑢𝑡
 
-×C
-in
-	​
+	​Where:
 
-+1)×C
-out
-	​
+        𝐾ℎ = filter (kernel) height
 
+        𝐾𝑤 = filter width
 
-Where:
+        𝐶i𝑛 = number of input channels
 
-𝐾
-ℎ
-K
-h
-	​
+       𝐶𝑜𝑢𝑡 = number of output channels (number of filters)
 
- = filter (kernel) height
-
-𝐾
-𝑤
-K
-w
-	​
-
- = filter width
-
-𝐶
-𝑖
-𝑛
-C
-in
-	​
-
- = number of input channels
-
-𝐶
-𝑜
-𝑢
-𝑡
-C
-out
-	​
-
- = number of output channels (number of filters)
-
-+
-1
-+1 = bias term for each filter
+	   +1 = bias term for each filter
